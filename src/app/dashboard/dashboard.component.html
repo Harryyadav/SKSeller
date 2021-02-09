@@ -63,9 +63,9 @@
             <div class="col-sm-6">Total Item / Active Item</div>
             <div class="col-sm-6 text-right">
               <div ngbDropdown>
-                <button class="btn btn-secondary" type="button" id="dropdownMenuButton2" ngbDropdownToggle>
+                <!-- <button class="btn btn-secondary" type="button" id="dropdownMenuButton2" ngbDropdownToggle>
                   Today
-                </button>
+                </button> -->
                 <!-- <div ngbDropdownMenu aria-labelledby="dropdownMenuButton2">
                   <h6 class="dropdown-header">Monday</h6>
                   <a class="dropdown-item">Tuesday</a>
@@ -90,9 +90,9 @@
             <div class="col-sm-6">Catelogue Fill Rate</div>
             <div class="col-sm-6 text-right">
               <div ngbDropdown>
-                <button class="btn btn-secondary" type="button" id="dropdownMenuButton2" ngbDropdownToggle>
+                <!-- <button class="btn btn-secondary" type="button" id="dropdownMenuButton2" ngbDropdownToggle>
                   Today
-                </button>
+                </button> -->
                 <!-- <div ngbDropdownMenu aria-labelledby="dropdownMenuButton2">
                   <h6 class="dropdown-header">Monday</h6>
                   <a class="dropdown-item">Tuesday</a>
@@ -142,30 +142,30 @@
               <tr>
                 <td>icons</td>
                 <td>Active Retailer</td>
-                <td><i class="fa fa-inr"></i> {{SellerSales.TodayactiveRetailer}}</td>
-                <td><i class="fa fa-inr"></i> {{SellerSales.YesterdayactiveRetailer}}</td>
-                <td><i class="fa fa-inr"></i> {{SellerSales.monthactiveRetailer}}</td>
+                <td> {{SellerSales.TodayactiveRetailer}}</td>
+                <td> {{SellerSales.YesterdayactiveRetailer}}</td>
+                <td> {{SellerSales.monthactiveRetailer}}</td>
               </tr>
               <tr>
                 <td>icons</td>
                 <td>Total Line Item</td>
-                <td><i class="fa fa-inr"></i> {{SellerSales.todaytotalLineitem}}</td>
-                <td><i class="fa fa-inr"></i> {{SellerSales.YesterdaytotalLineitem}}</td>
-                <td><i class="fa fa-inr"></i> {{SellerSales.monthtotalLineitem}}</td>
+                <td> {{SellerSales.todaytotalLineitem}}</td>
+                <td>{{SellerSales.YesterdaytotalLineitem}}</td>
+                <td> {{SellerSales.monthtotalLineitem}}</td>
               </tr>
               <tr>
                 <td>icons</td>
                 <td>Total no. Orders</td>
-                <td><i class="fa fa-inr"></i> {{SellerSales.todaytotalOrder}}</td>
-                <td><i class="fa fa-inr"></i> {{SellerSales.YesterdaytotalOrder}}</td>
-                <td><i class="fa fa-inr"></i> {{SellerSales.monthtotalOrder}}</td>
+                <td> {{SellerSales.todaytotalOrder}}</td>
+                <td> {{SellerSales.YesterdaytotalOrder}}</td>
+                <td> {{SellerSales.monthtotalOrder}}</td>
               </tr>
               <tr>
                 <td>icons</td>
                 <td>Average Line Item</td>
-                <td><i class="fa fa-inr"></i>  {{SellerSales.todayAvgLineItem}}</td>
-                <td><i class="fa fa-inr"></i>  {{SellerSales.YesterdayAvgLineItem}}</td>
-                <td><i class="fa fa-inr"></i>  {{SellerSales.monthAvgLineItem}}</td>
+                <td>  {{SellerSales.todayAvgLineItem}}</td>
+                <td>  {{SellerSales.YesterdayAvgLineItem}}</td>
+                <td>  {{SellerSales.monthAvgLineItem}}</td>
               </tr>
               <tr>
                 <td>icons</td>
@@ -201,9 +201,9 @@
             </div>
             <div class="col-sm-3 text-right">
               <div ngbDropdown>
-                <button class="btn btn-secondary" type="button" id="dropdownMenuButton2" ngbDropdownToggle>
+                <!-- <button class="btn btn-secondary" type="button" id="dropdownMenuButton2" ngbDropdownToggle>
                   Today
-                </button>
+                </button> -->
                 <!-- <div ngbDropdownMenu aria-labelledby="dropdownMenuButton2">
                   <h6 class="dropdown-header">Monday</h6>
                   <a class="dropdown-item">Tuesday</a>
@@ -213,8 +213,13 @@
             </div>
           </div>
           <!-- <canvas baseChart [chartType]="'line'" [datasets]="areaChartData" [labels]="areaChartLabels" [options]="areaChartOptions" [colors]="areaChartColors"></canvas> -->
-          <canvas baseChart [chartType]="'doughnut'" [datasets]="doughnutPieChartData" [labels]="doughnutPieChartLabels"
-            [options]="doughnutPieChartOptions" [colors]="doughnutPieChartColors"></canvas>
+          <!-- <canvas baseChart [chartType]="'doughnut'" [datasets]="doughnutPieChartData" [labels]="doughnutPieChartLabels"
+            [options]="doughnutPieChartOptions" [colors]="doughnutPieChartColors"></canvas> -->
+
+            <div *ngIf="DashboardPoStatusCountChartData">
+              <app-donut-chart [doughnutPieChartDetails]="DashboardPoStatusCountChartData"
+                [doughnutPieChartLabelsDetails]="DashboardPoStatusCountDataLabels"></app-donut-chart>
+            </div>
         </div>
       </div>
     </div>
@@ -225,9 +230,9 @@
             <div class="col-sm-6">Purchase PO GR IR</div>
             <div class="col-sm-6 text-right">
               <div ngbDropdown>
-                <button class="btn btn-secondary" type="button" id="dropdownMenuButton2" ngbDropdownToggle>
+                <!-- <button class="btn btn-secondary" type="button" id="dropdownMenuButton2" ngbDropdownToggle>
                   Today
-                </button>
+                </button> -->
                 <!-- <div ngbDropdownMenu aria-labelledby="dropdownMenuButton2">
                   <h6 class="dropdown-header">Monday</h6>
                   <a class="dropdown-item">Tuesday</a>
@@ -283,9 +288,9 @@
             <div class="col-sm-6">Order </div>
             <div class="col-sm-6 text-right">
               <div ngbDropdown>
-                <button class="btn btn-secondary" type="button" id="dropdownMenuButton2" ngbDropdownToggle>
+                <!-- <button class="btn btn-secondary" type="button" id="dropdownMenuButton2" ngbDropdownToggle>
                   Today
-                </button>
+                </button> -->
                 <!-- <div ngbDropdownMenu aria-labelledby="dropdownMenuButton2">
                   <h6 class="dropdown-header">Monday</h6>
                   <a class="dropdown-item">Tuesday</a>
@@ -340,9 +345,9 @@
             <div class="col-sm-6">Stock Details</div>
             <div class="col-sm-6 text-right">
               <div ngbDropdown>
-                <button class="btn btn-secondary" type="button" id="dropdownMenuButton2" ngbDropdownToggle>
+                <!-- <button class="btn btn-secondary" type="button" id="dropdownMenuButton2" ngbDropdownToggle>
                   Today
-                </button>
+                </button> -->
                 <!-- <div ngbDropdownMenu aria-labelledby="dropdownMenuButton2">
                   <h6 class="dropdown-header">Monday</h6>
                   <a class="dropdown-item">Tuesday</a>
@@ -411,9 +416,9 @@
           <div class="row">
             <div class="col-sm-12 text-right">
               <div ngbDropdown>
-                <button class="btn btn-secondary" type="button" id="dropdownMenuButton2" ngbDropdownToggle>
+                <!-- <button class="btn btn-secondary" type="button" id="dropdownMenuButton2" ngbDropdownToggle>
                   Today
-                </button>
+                </button> -->
                 <!-- <div ngbDropdownMenu aria-labelledby="dropdownMenuButton2">
                   <h6 class="dropdown-header">Monday</h6>
                   <a class="dropdown-item">Tuesday</a>

@@ -28,6 +28,7 @@ import { AuthInterceptor } from './shared/auth/auth.interceptor';
 import {HttpClientModule, HttpClient, HTTP_INTERCEPTORS} from '@angular/common/http';
 
 import { DonutChartComponent } from './shared/components/donut-chart/donut-chart.component';
+import { UploadcfrarticlesComponent } from './uploadcfr/uploadcfrarticles/uploadcfrarticles.component';
 
 
 // AoT requires an exported function for factories
@@ -47,7 +48,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     TodoListComponent,
     TodoRtlComponent,
     ContentAnimateDirective,
-    DonutChartComponent
+    DonutChartComponent,
+    UploadcfrarticlesComponent
   ],
   imports: [
     BrowserModule,

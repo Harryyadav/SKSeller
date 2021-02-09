@@ -23,7 +23,7 @@ export class SubcatselectionComponent implements OnInit {
       })
     }
   }
-  SetSubcateId() {
+  SetSubcateId(subcatform:NgForm) {
     if(this.subcateid>0)
     {
     localStorage.setItem('SubCatId', this.subcateid);

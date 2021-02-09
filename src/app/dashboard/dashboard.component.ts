@@ -223,7 +223,7 @@ export class DashboardComponent implements OnInit {
   DashboardOrderFillRate: any;
   DashboardOrderAvgTAT: any;
   DashboardCurrentVsNetCurrent: any;
-  SellerSales: SellerSalesDc[];
+  SellerSales: SellerSalesDc;
 
   CatelogueItemWithCFRChartData: any;
   CatelogueItemWithCFRChartLabels: any;
@@ -235,6 +235,8 @@ export class DashboardComponent implements OnInit {
   DashboardOrderStatusDataChartData: any;
   DashboardOrderStatusDataLabels: any;
 
+  DashboardPoStatusCountChartData: any;
+  DashboardPoStatusCountDataLabels: any;
 
   SearchData: any;
 
@@ -259,9 +261,24 @@ export class DashboardComponent implements OnInit {
   Search() {
     this.SearchData.CityId = this.cityid;
     //Catelog
+    this.CatelogueItemTotalActiveChartData = null;
+    this.CatelogueItemTotalActiveChartLabels=null;
+    this.SellerSales=null;
+    this.DashboardPoStatusCount=null;
+    this.DashboardOrderStatusDataChartData=null;
+    this.DashboardOrderStatusDataLabels=null;
+    this.DashboardOrderFillRate=null;
+    this.DashboardOrderAvgTAT=null;
+    this.DashboardCurrentVsNetCurrentChartData=null;
+    this.DashboardCurrentVsNetCurrentLabels=null;
+    this.CatelogueItemWithCFRChartData=null;
+    this.CatelogueItemWithCFRChartData=null;
+    this.DashboardPoStatusCountChartData=null;
+    this.DashboardPoStatusCountDataLabels=null;
     this.isLoading = true;
     this.dashboardservice.GetCatelogueItemWithCFR(this.cityid).subscribe((x: any) => {
       this.isLoading = false;
+  
       //CatelogueItemTotalActive
       this.CatelogueItemTotalActiveChartData = [
         {
@@ -297,8 +314,14 @@ export class DashboardComponent implements OnInit {
 
     this.dashboardservice.GetDashboardPoStatusCount(this.SearchData).subscribe((x: any) => {
       this.isLoading = false;
-
       this.DashboardPoStatusCount = x
+      this.DashboardPoStatusCountChartData = [
+        {
+          data: [x.PendingOrdercount, x.OpenPO,x.HoldPO,x.CancelPO,x.PendingPO,x.ApprovedPO]
+        }
+      ];
+      this.DashboardPoStatusCountDataLabels = ['OpenPO', "HoldPO",'CancelPO', "PendingPO",'ApprovedPO'];
+
     }, error => {
       alert('Something went wrong in Get Seller Sales');
     });
@@ -324,7 +347,7 @@ export class DashboardComponent implements OnInit {
     this.isLoading = true;
     this.dashboardservice.GetDashboardOrderFillRate(this.SearchData).subscribe((x: any) => {
       this.isLoading = false;
-      debugger;
+      
       this.DashboardOrderFillRate = x
     }, error => {
       alert('Something went wrong in Get DashboardOrderFillRate');
