@@ -34,7 +34,7 @@
   font-size: $input-placeholder-font-size;
   font-weight: normal;
   padding: 0.625rem 0.6875rem;
-  background-color: $input-bg;
+  background-color: #1B2A47;
   border-radius: 2px;
   &::placeholder {
     color: $text-muted;
@@ -49,10 +49,10 @@ select {
   &.form-control {
     padding: .4375rem .75rem;
     border: 0;
-    outline: 1px solid $border-color;
+    outline: 1px solid #162236;
     color: $input-placeholder-color;
     &:focus {
-      outline: 1px solid $border-color;
+      outline: 1px solid #2F2741;
     }
     @each $color,
     $value in $theme-colors {

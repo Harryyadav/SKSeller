@@ -10,11 +10,11 @@
                                 <div class="form-group">
                                     <fieldset>
                                         <legend>Select SubCategory</legend>
-                                        <select id="subcategory" name="subcategory" class="form-control col-md-6 mg-b-10"
-                                            [(ngModel)]="subcateid" placeholder="Select subcategory"
+                                        <select id="subcategoryid" name="subcategoryname" class="form-control col-md-6 mg-b-10"
+                                            [(ngModel)]="subcategoryobj" placeholder="Select subcategory"
                                             #subcategory="ngModel">
                                             <option *ngFor="let subcategory of MappingsubcatList"
-                                                [ngValue]="subcategory.SubCategoryId" >
+                                                [ngValue]="subcategory" >
                                                 {{subcategory.SubcategoryName}}
                                             </option>
                                         </select>

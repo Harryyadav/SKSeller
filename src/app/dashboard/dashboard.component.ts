@@ -231,22 +231,27 @@ export class DashboardComponent implements OnInit {
   CatelogueItemTotalActiveChartLabels: any;
   DashboardCurrentVsNetCurrentChartData: any;
   DashboardCurrentVsNetCurrentLabels: any;
-
   DashboardOrderStatusDataChartData: any;
   DashboardOrderStatusDataLabels: any;
-
   DashboardPoStatusCountChartData: any;
   DashboardPoStatusCountDataLabels: any;
+  POGRIRCountChartData: any;
+  POGRIRCountChartDataLabels: any;
+
 
   SearchData: any;
-
+  WarehouseData: any;
+  Warehouseid: any;
+  subcateName: string;
+  POFillRate: any;
+  POAvgTAT: any;
   constructor(private router: Router, private cityservice: CityService, private dashboardservice: DashboardService) {
     this.SearchData = {};
   }
   ngOnInit() {
 
-
     this.subcateid = parseInt(localStorage.getItem('SubCatId'));
+    this.subcateName = localStorage.getItem('subcateName');
 
     if (!this.subcateid) {
       this.router.navigateByUrl('/user-pages/subcatselection');
@@ -258,132 +263,202 @@ export class DashboardComponent implements OnInit {
       this.CityList = x;
     });
   }
-  Search() {
-    this.SearchData.CityId = this.cityid;
-    //Catelog
-    this.CatelogueItemTotalActiveChartData = null;
-    this.CatelogueItemTotalActiveChartLabels=null;
-    this.SellerSales=null;
-    this.DashboardPoStatusCount=null;
-    this.DashboardOrderStatusDataChartData=null;
-    this.DashboardOrderStatusDataLabels=null;
-    this.DashboardOrderFillRate=null;
-    this.DashboardOrderAvgTAT=null;
-    this.DashboardCurrentVsNetCurrentChartData=null;
-    this.DashboardCurrentVsNetCurrentLabels=null;
-    this.CatelogueItemWithCFRChartData=null;
-    this.CatelogueItemWithCFRChartData=null;
-    this.DashboardPoStatusCountChartData=null;
-    this.DashboardPoStatusCountDataLabels=null;
-    this.isLoading = true;
-    this.dashboardservice.GetCatelogueItemWithCFR(this.cityid).subscribe((x: any) => {
-      this.isLoading = false;
-  
-      //CatelogueItemTotalActive
-      this.CatelogueItemTotalActiveChartData = [
-        {
-          data: [x.TotalItem, x.Activeitem]
-        }
-      ];
-      this.CatelogueItemTotalActiveChartLabels = ['Total Item', "Active Item"];
 
-      //Fill rate
-      this.CatelogueItemWithCFRChartData = [
-        {
-          data: [x.TotalItem, x.CFRItem]
-        }
-      ];
-      this.CatelogueItemWithCFRChartLabels = ['Total Item', "Active Item"];
-    }, error => {
-      alert('Something went wrong in Get Catelogue Item With CFR');
-    });
-
-
-    //GetSellerSales
-    this.isLoading = true;
-    this.dashboardservice.GetSellerSales(this.cityid).subscribe((x: any) => {
-      this.isLoading = false;
-      this.SellerSales = x
-    }, error => {
-      alert('Something went wrong in Get Seller Sales');
-    });
-
-
-    //DashboardPoStatusCountDc
-    this.isLoading = true;
-
-    this.dashboardservice.GetDashboardPoStatusCount(this.SearchData).subscribe((x: any) => {
-      this.isLoading = false;
-      this.DashboardPoStatusCount = x
-      this.DashboardPoStatusCountChartData = [
-        {
-          data: [x.PendingOrdercount, x.OpenPO,x.HoldPO,x.CancelPO,x.PendingPO,x.ApprovedPO]
-        }
-      ];
-      this.DashboardPoStatusCountDataLabels = ['OpenPO', "HoldPO",'CancelPO', "PendingPO",'ApprovedPO'];
-
-    }, error => {
-      alert('Something went wrong in Get Seller Sales');
-    });
-
-
-    //DashboardOrderStatusData
-    this.isLoading = true;
-    this.dashboardservice.GetDashboardOrderStatusData(this.SearchData).subscribe((x: any) => {
-      this.isLoading = false;
-      this.DashboardOrderStatusData = x;
-      this.DashboardOrderStatusDataChartData = [
-        {
-          data: [x.PendingOrdercount, x.ReadytoDispatchOrdercount,x.IssuedOrdercount,x.ShippedOrdercount,x.DeliveredOrdercount,x.DeliveryRedispatchOrdercount,x.DeliveryCanceledOrdercount]
-        }
-      ];
-      this.DashboardOrderStatusDataLabels = ['Pending', "RTD",'Issued', "Shipped",'Delivered', "DeliveryRedispatch","DeliveryCanceled"];
-    }, error => {
-      alert('Something went wrong in Get Dashboard Order Status Data');
-    });
-
-
-    //DashboardOrderFillRate
-    this.isLoading = true;
-    this.dashboardservice.GetDashboardOrderFillRate(this.SearchData).subscribe((x: any) => {
-      this.isLoading = false;
-      
-      this.DashboardOrderFillRate = x
-    }, error => {
-      alert('Something went wrong in Get DashboardOrderFillRate');
-    });
-
-
-    //DashboardOrderAvgTAT
-    this.isLoading = true;
-    this.dashboardservice.GetDashboardOrderAvgTAT(this.SearchData).subscribe((x: any) => {
-      this.isLoading = false;
+  GetCityWarehouse() {
+    debugger;
+    this.cityservice.getWareHouseByCity(this.cityid).subscribe(x => {
       debugger;
-      this.DashboardOrderAvgTAT = x
-    }, error => {
-      alert('Something went wrong in Get DashboardOrderAvgTAT');
-    });
-
-    //DashboardCurrentVsNetCurrent
-    this.isLoading = true;
-    this.dashboardservice.GetDashboardCurrentVsNetCurrent(this.SearchData).subscribe((x: any) => {
-      this.isLoading = false;
-
-      this.DashboardCurrentVsNetCurrent = x
-      //CatelogueItemTotalActive
-      this.DashboardCurrentVsNetCurrentChartData = [
-        {
-          data: [x.CurrentStockAmount, x.CurrentNetStockAmount]
-        }
-      ];
-      this.DashboardCurrentVsNetCurrentLabels = ['CurrentStock', "CurrentNetStock"];
-
-
-    }, error => {
-      alert('Something went wrong in Get DashboardCurrentVsNetCurrent');
+      this.WarehouseData = x;
+      this.Warehouseid = this.WarehouseData[0].WarehouseId;
     });
   }
 
+
+  Search() {
+    this.SearchData.CityId = this.cityid;
+    if (this.cityid > 0 && this.Search) {
+      //Catelog
+      this.CatelogueItemTotalActiveChartData = null;
+      this.CatelogueItemTotalActiveChartLabels = null;
+      this.SellerSales = null;
+      this.DashboardPoStatusCount = null;
+      this.DashboardOrderStatusDataChartData = null;
+      this.DashboardOrderStatusDataLabels = null;
+      this.DashboardOrderFillRate = null;
+      this.POFillRate = null;
+
+      this.POAvgTAT = null;
+      this.DashboardOrderAvgTAT = null;
+      this.DashboardCurrentVsNetCurrentChartData = null;
+      this.DashboardCurrentVsNetCurrentLabels = null;
+      this.CatelogueItemWithCFRChartData = null;
+      this.CatelogueItemWithCFRChartData = null;
+      this.DashboardPoStatusCountChartData = null;
+      this.DashboardPoStatusCountDataLabels = null;
+      this.POGRIRCountChartData = null;
+      this.POGRIRCountChartDataLabels = null;
+
+      this.isLoading = true;
+      //CatelogueItemTotalActive
+      this.dashboardservice.GetCatelogueItemWithCFR(this.cityid, this.Warehouseid).subscribe((x: any) => {
+        this.isLoading = false;
+        this.CatelogueItemTotalActiveChartData = [
+          {
+            data: [x.TotalItem, x.Activeitem]
+          }
+        ];
+        this.CatelogueItemTotalActiveChartLabels = ['Total Item', "Active Item"];
+        this.CatelogueItemWithCFRChartData = [
+          {
+            data: [x.TotalItem, x.CFRItem]
+          }
+        ];
+        this.CatelogueItemWithCFRChartLabels = ['Total Item', "Active Item"];
+      }, error => {
+        alert('Something went wrong in Get Catelogue Item With CFR');
+      });
+      //GetSellerSales
+      this.isLoading = true;
+      this.dashboardservice.GetSellerSales(this.cityid).subscribe((x: any) => {
+        this.isLoading = false;
+        this.SellerSales = x
+      }, error => {
+        alert('Something went wrong in Get Seller Sales');
+      });
+      //DashboardPoStatusCountDc
+      this.isLoading = true;
+      this.dashboardservice.GetDashboardPoStatusCount(this.SearchData).subscribe((x: any) => {
+        this.isLoading = false;
+        this.DashboardPoStatusCount = x
+        this.DashboardPoStatusCountChartData = [
+          {
+            data: [x.OpenPO, x.HoldPO, x.CancelPO, x.PendingPO, x.ApprovedPO, x.ClosedPO]
+          }
+        ];
+        this.DashboardPoStatusCountDataLabels = ['OpenPO', "HoldPO", 'CancelPO', "PendingPO", 'ApprovedPO', 'ClosedPO'];
+
+      }, error => {
+        alert('Something went wrong in Get Seller Sales');
+      });
+      //DashboardOrderStatusData
+      this.isLoading = true;
+      this.dashboardservice.GetDashboardOrderStatusData(this.SearchData).subscribe((x: any) => {
+        this.isLoading = false;
+        this.DashboardOrderStatusData = x;
+        this.DashboardOrderStatusDataChartData = [
+          {
+            data: [x.PendingOrdercount, x.ReadytoDispatchOrdercount, x.IssuedOrdercount, x.ShippedOrdercount, x.DeliveredOrdercount, x.DeliveryRedispatchOrdercount, x.DeliveryCanceledOrdercount]
+          }
+        ];
+        this.DashboardOrderStatusDataLabels = ['Pending', "RTD", 'Issued', "Shipped", 'Delivered', "DRedispatch", "DCanceled"];
+      }, error => {
+        alert('Something went wrong in Get Dashboard Order Status Data');
+      });
+      //DashboardOrderFillRate
+      this.isLoading = true;
+      this.dashboardservice.GetDashboardOrderFillRate(this.SearchData).subscribe((x: any) => {
+        this.isLoading = false;
+
+        this.DashboardOrderFillRate = x
+      }, error => {
+        alert('Something went wrong in Get DashboardOrderFillRate');
+      });
+
+      //POFillRate
+      this.isLoading = true;
+      this.dashboardservice.GetPOFillRate(this.SearchData).subscribe((x: any) => {
+        this.isLoading = false;
+        this.POFillRate = x
+      }, error => {
+        alert('Something went wrong in Get DashboardOrderFillRate');
+      });
+
+      //POAvgTAT
+      this.isLoading = true;
+      this.dashboardservice.GetPOAvgTAT(this.SearchData).subscribe((x: any) => {
+        this.isLoading = false;
+        debugger;
+        this.POAvgTAT = x
+      }, error => {
+        alert('Something went wrong in Get DashboardOrderAvgTAT');
+      });
+
+      //DashboardOrderAvgTAT
+      this.isLoading = true;
+      this.dashboardservice.GetDashboardOrderAvgTAT(this.SearchData).subscribe((x: any) => {
+        this.isLoading = false;
+        debugger;
+        this.DashboardOrderAvgTAT = x
+      }, error => {
+        alert('Something went wrong in Get DashboardOrderAvgTAT');
+      });
+      //DashboardCurrentVsNetCurrent
+      this.isLoading = true;
+      this.dashboardservice.GetDashboardCurrentVsNetCurrent(this.SearchData).subscribe((x: any) => {
+        this.isLoading = false;
+        this.DashboardCurrentVsNetCurrent = x
+        //CatelogueItemTotalActive
+        this.DashboardCurrentVsNetCurrentChartData = [
+          {
+            data: [x.CurrentStockAmount, x.CurrentNetStockAmount]
+          }
+        ];
+        this.DashboardCurrentVsNetCurrentLabels = ['CurrentStock', "CurrentNetStock"];
+
+      }, error => {
+        alert('Something went wrong in Get DashboardCurrentVsNetCurrent');
+      });
+
+
+      //POGRIRCount
+      this.isLoading = true;
+      this.dashboardservice.GetPOGRIRCount(this.SearchData).subscribe((x: any) => {
+        this.isLoading = false;
+        this.POGRIRCountChartData = [
+          {
+            data: [x.POCount, x.GRCount, x.IRCount]
+          }
+        ];
+        this.POGRIRCountChartDataLabels = ['PO', 'GR', "IR"];
+
+      }, error => {
+        alert('Something went wrong in Get Seller Sales');
+      });
+
+
+    } else { alert("select city"); }
+  }
+
+  getCatlogData() {
+    debugger;
+    if (this.Warehouseid) {
+      this.CatelogueItemWithCFRChartData = null;
+      this.CatelogueItemWithCFRChartData = null;
+      this.CatelogueItemTotalActiveChartData = null;
+      this.CatelogueItemTotalActiveChartLabels = null;
+      this.dashboardservice.GetCatelogueItemWithCFR(this.cityid, this.Warehouseid).subscribe((x: any) => {
+        this.isLoading = false;
+        //CatelogueItemTotalActive
+        this.CatelogueItemTotalActiveChartData = [
+          {
+            data: [x.TotalItem, x.Activeitem]
+          }
+        ];
+        this.CatelogueItemTotalActiveChartLabels = ['Total Item', "Active Item"];
+        //Fill rate
+        this.CatelogueItemWithCFRChartData = [
+          {
+            data: [x.TotalItem, x.CFRItem]
+          }
+        ];
+        this.CatelogueItemWithCFRChartLabels = ['Total Item', "Active Item"];
+      }, error => {
+        alert('Something went wrong in Get Catelogue Item With CFR');
+      });
+
+    } else {         alert('Select warehouse ');
+  }
+  }
 }
 
 

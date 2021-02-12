@@ -36,8 +36,8 @@ export class LoginComponent implements OnInit {
       alert('login successful');
       this.isLoading = false;
       this.localStorageService.set(this.localStorageService.tokenKey, x);
-      localStorage.setItem('tokenData', JSON.stringify(x));
-      localStorage.setItem('userToken', x.access_token);
+      localStorage.setItem('sellertokenData', JSON.stringify(x));
+      localStorage.setItem('selleruserToken', x.access_token);
       localStorage.setItem('userid', x.userid);
       localStorage.setItem('userName', x.userName);
       localStorage.setItem('SubCatId', "0");

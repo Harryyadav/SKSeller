@@ -61,14 +61,14 @@ export class AuthInterceptor implements HttpInterceptor {
                 })
             );
 
-        if (isPlatformBrowser(this.platformId) && localStorage.getItem('userToken') != null) {
+        if (isPlatformBrowser(this.platformId) && localStorage.getItem('selleruserToken') != null) {
             
             let SubCatId = localStorage.getItem('SubCatId');
             let userid = localStorage.getItem('userid');
             let clonedreq = null;
             clonedreq = req.clone({
                 setHeaders: {
-                    Authorization: `Bearer ${localStorage.getItem('userToken')}`,
+                    Authorization: `Bearer ${localStorage.getItem('selleruserToken')}`,
                     SubCatId: SubCatId,
                     PeopleId: userid,
                 }

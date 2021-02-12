@@ -11,26 +11,29 @@ import { SubcatmappingService } from '../../services/subcatmapping.service';
 })
 export class SubcatselectionComponent implements OnInit {
   subcateid: any;
+  subcategoryobj: any
   MappingsubcatList: any;
   userid: any;
   constructor(private SubCatMappingService: SubcatmappingService, private localStorageService: LocalStogareService, private router: Router) { }
   ngOnInit(): void {
     this.userid = localStorage.getItem('userid');
-    this.subcateid =parseInt(localStorage.getItem('SubCatId'));
+    this.subcateid = parseInt(localStorage.getItem('SubCatId'));
     if (this.userid > 0) {
-      this.SubCatMappingService.GetAllSubCatMapping().subscribe(result=>{
-       this.MappingsubcatList =result;
+      this.SubCatMappingService.GetAllSubCatMapping().subscribe(result => {
+        this.MappingsubcatList = result;
       })
     }
   }
-  SetSubcateId(subcatform:NgForm) {
-    if(this.subcateid>0)
-    {
-    localStorage.setItem('SubCatId', this.subcateid);
-    this.router.navigateByUrl('/dashboard');
+  SetSubcateId(subcatform: NgForm) {
+    
+  
+    this.subcateid = this.subcategoryobj.SubCategoryId;
+    if (this.subcateid > 0) {
+      localStorage.setItem('SubCatId', this.subcateid);
+      localStorage.setItem('subcateName', this.subcategoryobj.SubcategoryName);
+      this.router.navigateByUrl('/dashboard');
     }
-    else
-    {
+    else {
       alert("Please select subcategory");
     }
   }

@@ -11,8 +11,8 @@ export class DashboardService {
     this.apiURL = environment.apiBaseUrl;
 
   }
-  GetCatelogueItemWithCFR(cityid: any) {
-    return this.http.get<any>(this.apiURL + '/api/Seller/GetCatelogueItemWithCFR/' + cityid);
+  GetCatelogueItemWithCFR(cityid,WarehouseId) {
+    return this.http.get<any>(this.apiURL + '/api/Seller/GetCatelogueItemWithCFR/' + cityid +'/'+WarehouseId);
   }
 
   GetSellerSales(cityid: any) {
@@ -33,6 +33,13 @@ export class DashboardService {
 
   }
 
+  GetPOFillRate(object) {
+    return this.http.post<any>(this.apiURL + '/api/Seller/POFillRate', object);
+  }
+  GetPOAvgTAT(object) {
+    return this.http.post<any>(this.apiURL + '/api/Seller/POAvgTAT', object);
+
+  }
   GetDashboardOrderAvgTAT(object) {
     return this.http.post<any>(this.apiURL + '/api/Seller/DashboardOrderAvgTAT', object);
 
@@ -42,6 +49,11 @@ export class DashboardService {
     return this.http.post<any>(this.apiURL + '/api/Seller/DashboardCurrentVsNetCurrent', object);
 
   }
+  GetPOGRIRCount(object) {
+    return this.http.post<any>(this.apiURL + '/api/Seller/POGRIRCount', object);
+
+  }
+  
 }
 
 

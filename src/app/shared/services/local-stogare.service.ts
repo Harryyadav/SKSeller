@@ -5,7 +5,7 @@ import { isPlatformBrowser } from '@angular/common';
   providedIn: 'root'
 })
 export class LocalStogareService {
-  tokenKey: string = 'userToken';
+  tokenKey: string = 'selleruserToken';
   redirectUrlKey : string = 'redirectUrl';
   
   

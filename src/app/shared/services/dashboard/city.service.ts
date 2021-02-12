@@ -14,6 +14,11 @@ export class CityService {
   GetAllCity(): Observable<any[]> {
     return this.http.get<any[]>(this.apiURL + '/api/Warehouse/GetActiveWarehouseCity');
   }
+
+  getWareHouseByCity(cityId): Observable<any> {
+   
+    return this.http.get<any>(this.apiURL + '/api/Warehouse/GetWarehouseCity?cityid=' + cityId);
+  }
 }
 
 
