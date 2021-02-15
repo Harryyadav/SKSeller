@@ -5,6 +5,7 @@
 export const environment = {
   apiBaseUrl: 'http://localhost:26265',
   //apiBaseUrl: 'https://uat.shopkirana.in',
+  
   production: false
 };
 
