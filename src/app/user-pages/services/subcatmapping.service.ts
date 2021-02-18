@@ -14,6 +14,20 @@ export class SubcatmappingService {
 
     return this.http.get<any[]>(this.rootUrl + '/api/Seller/Mapping');
   }
+
+  GetAllBrand(): Observable<any[]> {
+
+    return this.http.get<any[]>(this.rootUrl + '/api/Seller/Brand');
+  }
+
+
+  UploadExcel(formData: FormData) {
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'multipart/form-data');
+    headers.append('Accept', 'application/json');
+    const httpOptions = { headers: headers };
+    return this.http.post(this.rootUrl + '/UploadSellerCfr', formData, httpOptions)
+  }
  
 }
 

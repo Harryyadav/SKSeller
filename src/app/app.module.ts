@@ -22,14 +22,13 @@ import { TodoListComponent } from './apps/todo-list/todo-list.component';
 import { ContentAnimateDirective } from './shared/directives/content-animate.directive';
 import { AuthService } from './shared/auth/auth.service';
 import { AuthGuard } from './shared/auth/auth-guard.service';
-
 import { DatePipe } from '@angular/common';
 import { AuthInterceptor } from './shared/auth/auth.interceptor';
 import {HttpClientModule, HttpClient, HTTP_INTERCEPTORS} from '@angular/common/http';
-
 import { DonutChartComponent } from './shared/components/donut-chart/donut-chart.component';
 import { UploadcfrarticlesComponent } from './uploadcfr/uploadcfrarticles/uploadcfrarticles.component';
-
+import { TableModule } from 'primeng/table';
+import { AccordionModule } from 'primeng/accordion';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -58,11 +57,13 @@ export function HttpLoaderFactory(http: HttpClient) {
     NgbModule,
     BrowserAnimationsModule,
     FormsModule,
+    AccordionModule,
     ReactiveFormsModule,
     ToastrModule.forRoot(),
     ChartsModule,
     CarouselModule,
     NgxMapboxGLModule,
+    TableModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

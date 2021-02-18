@@ -77,12 +77,12 @@ export class DashboardComponent implements OnInit {
   barChartColors = [
     {
       backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(255, 159, 64, 0.2)'
+        'rgba(255, 99, 132, 1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86,1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)'
       ],
       borderColor: [
         'rgba(255,99,132,1)',
@@ -130,21 +130,35 @@ export class DashboardComponent implements OnInit {
     }
   };
 
+  // doughnutPieChartColors = [
+  //   {
+  //     backgroundColor: [
+  //       'rgba(255, 99, 132, 0.2)',
+  //       'rgba(54, 162, 235, 0.2)',
+  //       'rgba(255, 206, 86, 0.2)'
+  //     ],
+  //     borderColor: [
+  //       'rgba(255,99,132,1)',
+  //       'rgba(54, 162, 235, 1)',
+  //       'rgba(255, 206, 86, 1)'
+  //     ]
+  //   }
+  // ];
+
   doughnutPieChartColors = [
     {
       backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)'
+        'rgba(94, 224, 250, 1)',
+        'rgba(115, 163, 248, 1)',
+        'rgba(255, 206, 86, 1)'
       ],
       borderColor: [
-        'rgba(255,99,132,1)',
-        'rgba(54, 162, 235, 1)',
+        'rgba(94, 224, 250, 1)',
+        'rgba(115, 163, 248, 1)',
         'rgba(255, 206, 86, 1)'
       ]
     }
   ];
-
 
   scatterChartData = [
     {
@@ -203,14 +217,14 @@ export class DashboardComponent implements OnInit {
   scatterChartColors = [
     {
       backgroundColor: [
-        'rgba(255, 99, 132, 0.2)'
+        'rgba(255, 99, 132, 1)'
       ],
       borderColor: [
         'rgba(255,99,132,1)']
     },
     {
       backgroundColor: [
-        'rgba(54, 162, 235, 0.2)'
+        'rgba(54, 162, 235, 1)'
       ],
       borderColor: [
         'rgba(54, 162, 235, 1)'
@@ -265,9 +279,9 @@ export class DashboardComponent implements OnInit {
   }
 
   GetCityWarehouse() {
-    debugger;
+    
     this.cityservice.getWareHouseByCity(this.cityid).subscribe(x => {
-      debugger;
+    
       this.WarehouseData = x;
       this.Warehouseid = this.WarehouseData[0].WarehouseId;
     });
@@ -377,7 +391,7 @@ export class DashboardComponent implements OnInit {
       this.isLoading = true;
       this.dashboardservice.GetPOAvgTAT(this.SearchData).subscribe((x: any) => {
         this.isLoading = false;
-        debugger;
+        
         this.POAvgTAT = x
       }, error => {
         alert('Something went wrong in Get DashboardOrderAvgTAT');
@@ -387,7 +401,7 @@ export class DashboardComponent implements OnInit {
       this.isLoading = true;
       this.dashboardservice.GetDashboardOrderAvgTAT(this.SearchData).subscribe((x: any) => {
         this.isLoading = false;
-        debugger;
+       
         this.DashboardOrderAvgTAT = x
       }, error => {
         alert('Something went wrong in Get DashboardOrderAvgTAT');
@@ -430,7 +444,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getCatlogData() {
-    debugger;
+    
     if (this.Warehouseid) {
       this.CatelogueItemWithCFRChartData = null;
       this.CatelogueItemWithCFRChartData = null;

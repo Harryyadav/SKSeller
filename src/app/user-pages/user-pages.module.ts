@@ -30,7 +30,7 @@ const routes: Routes = [
     ForgotPasswordComponent, 
     LoginViaMobileComponent, 
     LoginOtpConfirmationComponent, 
-    SubcatselectionComponent
+    SubcatselectionComponent,
   ],
   imports: [
     CommonModule,

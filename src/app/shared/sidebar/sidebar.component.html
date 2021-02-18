@@ -21,6 +21,22 @@
         <span class="menu-title" translate>Change Subcat</span>
       </a>
     </li>
+    <li class="nav-item menu-items" [ngClass]="{ 'active': uploadcfr.isActive }">
+      <a class="nav-link" routerLink="/uploadcfr" routerLinkActive #uploadcfr="routerLinkActive">
+        <span class="menu-icon">
+          <i class="mdi mdi-speedometer"></i> 
+        </span>
+        <span class="menu-title" translate>Upload CFR </span>
+      </a>
+    </li>
+    <li class="nav-item menu-items" [ngClass]="{ 'active': Itemschemeuploader.isActive }">
+      <a class="nav-link" routerLink="/itemscheme/Itemschemeuploader" routerLinkActive #Itemschemeuploader="routerLinkActive">
+        <span class="menu-icon">
+          <i class="mdi mdi-speedometer"></i> 
+        </span>
+        <span class="menu-title" translate> Upload Itemscheme</span>
+      </a>
+    </li>
      <!-- <li class="nav-item menu-items" [ngClass]="{'active' : buttons.isActive || dropdowns.isActive || typography.isActive }">
       <a class="nav-link" (click)="uiBasicCollapsed = !uiBasicCollapsed" [attr.aria-expanded]="uiBasicCollapsed" aria-controls="ui-basic">
         <span class="menu-icon">

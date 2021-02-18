@@ -71,6 +71,9 @@
     "ngx-summernote": "^0.8.0",
     "ngx-toastr": "^13.2.0",
     "nouislider": "^14.6.3",
+    "primeicons": "^4.1.0",
+    "primeng": "^11.2.2",
+    "ptable": "0.0.3",
     "raphael": "^2.3.0",
     "rxjs": "~6.6.3",
     "select2": "^4.0.13",
@@ -80,6 +83,7 @@
     "ti-icons": "^0.1.2",
     "tinymce": "5.6.2",
     "tslib": "^2.0.3",
+    "xlsx": "^0.16.9",
     "zone.js": "~0.11.3"
   },
   "devDependencies": {

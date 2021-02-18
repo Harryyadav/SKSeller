@@ -18,9 +18,11 @@ export class LoginComponent implements OnInit {
     , private localStorageService: LocalStogareService
     , private router: Router) { }
   ngOnInit() {
-    debugger;
+   
     this.isLoading = false;
-    if (this.localStorageService.getItemString(this.localStorageService.tokenKey)) {
+    if (this.localStorageService.getItemString(this.localStorageService.tokenKey)) 
+    {
+     
       if (parseInt(localStorage.getItem('SubCatId'))) {
         this.router.navigateByUrl('/dashboard');
       }
