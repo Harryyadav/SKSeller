@@ -29,14 +29,14 @@ export class DonutChartComponent implements OnInit {
   doughnutPieChartColors = [
     {
       backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',  //pink
-        'rgba(54, 162, 235, 0.2)',//blue
-        'rgba(255, 206, 86, 0.2)',//yellow
-        'rgba(75, 192, 192, 0.2)',//skyblue
-        'rgba(153, 102, 255, 0.2)',//vilolet
-        'rgba(255, 159, 64, 0.2)',//orange
-        'rgba(251, 24, 10, 0.2)',//Red
-        'rgba(247, 5, 244, 0.2)'//LightViolet
+        'rgba(255, 99, 132, 1)',  //pink
+        'rgba(54, 162, 235, 1)',//blue
+        'rgba(255, 206, 86, 1)',//yellow
+        'rgba(75, 192, 192, 1)',//skyblue
+        'rgba(153, 102, 255, 1)',//vilolet
+        'rgba(255, 159, 64, 1)',//orange
+        'rgba(251, 24, 10, 1)',//Red
+        'rgba(247, 5, 244, 1)'//LightViolet
       ],
       borderColor: [
         'rgba(255,99,132,1)',

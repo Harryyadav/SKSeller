@@ -297,25 +297,68 @@
     <div class="col-lg-12 grid-margin stretch-card">
       <div class="card">
         <div class="card-body">
+          Order
           <div class="row">
-            <div class="col-sm-6">Order </div>
+            <div class="col-sm-6">
+              <div *ngIf="DashboardOrderStatusDataChartData">
+              <app-donut-chart [doughnutPieChartDetails]="DashboardOrderStatusDataChartData"
+                [doughnutPieChartLabelsDetails]="DashboardOrderStatusDataLabels"></app-donut-chart>
+            </div> </div>
             <div class="col-sm-6 text-right">
               <div ngbDropdown>
-                <!-- <button class="btn btn-secondary" type="button" id="dropdownMenuButton2" ngbDropdownToggle>
-                  Today
-                </button> -->
-                <!-- <div ngbDropdownMenu aria-labelledby="dropdownMenuButton2">
-                  <h6 class="dropdown-header">Monday</h6>
-                  <a class="dropdown-item">Tuesday</a>
-                  <a class="dropdown-item">Wednesday</a>
-                </div> -->
+                <table class="no-border custom-table">
+                  <tr>
+                    <td colspan="2"></td>
+                    <td><small>Count</small></td>
+                    <td><small>Amount</small></td>
+                  </tr>
+                  <tr>
+                    <td><button class="btn btn-warning btn-xs"><i class="fa fa-share-square-o"></i> Export</button></td>
+                    <td class="text-left">Pending</td>
+                    <td>500</td>
+                    <td>500</td>
+                  </tr>
+                  <tr>
+                    <td><button class="btn btn-primary btn-xs"><i class="fa fa-share-square-o"></i> Export</button></td>
+                    <td class="text-left">Ready to dispatched</td>
+                    <td>301</td>
+                    <td>300</td>
+                  </tr>
+                  <tr>
+                    <td><button class="btn btn-info btn-xs"><i class="fa fa-share-square-o"></i> Export</button></td>
+                    <td class="text-left">Issued</td>
+                    <td>152</td>
+                    <td>152</td>
+                  </tr>
+                  <tr>
+                    <td><button class="btn btn-danger btn-xs"><i class="fa fa-share-square-o"></i> Export</button></td>
+                    <td class="text-left">Shipped</td>
+                    <td>124</td>
+                    <td>124</td>
+                  </tr>
+                  <tr>
+                    <td><button class="btn btn-success btn-xs"><i class="fa fa-share-square-o"></i> Export</button></td>
+                    <td class="text-left">Delivery Canceled</td>
+                    <td>1254</td>
+                    <td>1254</td>
+                  </tr>
+                  <tr>
+                    <td><button class="btn btn-gray btn-xs"><i class="fa fa-share-square-o"></i> Export</button></td>
+                    <td class="text-left">Delivered Re-Dispatched</td>
+                    <td>125</td>
+                    <td>125</td>
+                  </tr>
+                  <tr>
+                    <td><button class="btn btn-primary btn-xs"><i class="fa fa-share-square-o"></i> Export</button></td>
+                    <td class="text-left">Delivered</td>
+                    <td>12450</td>
+                    <td>12450</td>
+                  </tr>
+                </table>
               </div>
             </div>
           </div>
-          <div *ngIf="DashboardOrderStatusDataChartData">
-            <app-donut-chart [doughnutPieChartDetails]="DashboardOrderStatusDataChartData"
-              [doughnutPieChartLabelsDetails]="DashboardOrderStatusDataLabels"></app-donut-chart>
-          </div>
+          
           <!-- <canvas baseChart [chartType]="'doughnut'" [datasets]="doughnutPieChartData" [labels]="doughnutPieChartLabels"
             [options]="doughnutPieChartOptions" [colors]="doughnutPieChartColors"></canvas> -->
         </div>
@@ -414,7 +457,7 @@
             <div class="col-sm-3 pt2"><img src="assets/images/page_1.svg" /> </div>
             <div class="col-sm-9">
               <h3 *ngIf="DashboardCurrentVsNetCurrent"><i class="fa fa-inr"></i>
-                {{DashboardCurrentVsNetCurrent.ExpireStockAmount | number : '1.2-2'}}</h3><small>Expiry</small>
+                {{DashboardCurrentVsNetCurrent.ExpireStockAmount | number : '1.2-2'}}</h3><small>Not Saleable</small>
             </div>
           </div>
         </div>
