@@ -249,16 +249,30 @@ export class DashboardComponent implements OnInit {
   DashboardOrderStatusDataLabels: any;
   DashboardPoStatusCountChartData: any;
   DashboardPoStatusCountDataLabels: any;
+
+  DashboardPoStatusAmountChartData: any;
+  DashboardPoStatusAmountDataLabels: any;
+
   POGRIRCountChartData: any;
   POGRIRCountChartDataLabels: any;
 
 
+  POGRIRAmountChartData: any;
+  POGRIRAmountChartDataLabels: any;
+  POGRIRData: any;
+
+  PoShowType: boolean;
+  showPOCountValue: boolean = false;
+  showPOGRIRAmountValue: boolean = false;
   SearchData: any;
   WarehouseData: any;
   Warehouseid: any;
   subcateName: string;
   POFillRate: any;
   POAvgTAT: any;
+  Paretotype: any;
+  itemnumber: any;
+
   constructor(private router: Router, private cityservice: CityService, private dashboardservice: DashboardService) {
     this.SearchData = {};
   }
@@ -279,9 +293,9 @@ export class DashboardComponent implements OnInit {
   }
 
   GetCityWarehouse() {
-    
+
     this.cityservice.getWareHouseByCity(this.cityid).subscribe(x => {
-    
+
       this.WarehouseData = x;
       this.Warehouseid = this.WarehouseData[0].WarehouseId;
     });
@@ -309,9 +323,13 @@ export class DashboardComponent implements OnInit {
       this.CatelogueItemWithCFRChartData = null;
       this.DashboardPoStatusCountChartData = null;
       this.DashboardPoStatusCountDataLabels = null;
+      this.DashboardPoStatusAmountChartData = null;
+      this.DashboardPoStatusAmountDataLabels = null;
+      this.POGRIRData = null;
       this.POGRIRCountChartData = null;
       this.POGRIRCountChartDataLabels = null;
-
+      this.POGRIRAmountChartData = null;
+      this.POGRIRAmountChartDataLabels = null;
       this.isLoading = true;
       //CatelogueItemTotalActive
       this.dashboardservice.GetCatelogueItemWithCFR(this.cityid, this.Warehouseid).subscribe((x: any) => {
@@ -327,7 +345,7 @@ export class DashboardComponent implements OnInit {
             data: [x.TotalItem, x.CFRItem]
           }
         ];
-        this.CatelogueItemWithCFRChartLabels = ['Total Item', "Active Item"];
+        this.CatelogueItemWithCFRChartLabels = ['Total Item', "CFR Active Item"];
       }, error => {
         alert('Something went wrong in Get Catelogue Item With CFR');
       });
@@ -343,14 +361,15 @@ export class DashboardComponent implements OnInit {
       this.isLoading = true;
       this.dashboardservice.GetDashboardPoStatusCount(this.SearchData).subscribe((x: any) => {
         this.isLoading = false;
-        this.DashboardPoStatusCount = x
+        this.DashboardPoStatusCount = x;
+        this.showPOCountValue = false;
+
         this.DashboardPoStatusCountChartData = [
           {
-            data: [x.OpenPO, x.HoldPO, x.CancelPO, x.PendingPO, x.ApprovedPO, x.ClosedPO]
+            data: [x.PendingPOCount, x.PartialPOCount, x.ClosedPOCount, x.CancelPOCount]
           }
         ];
-        this.DashboardPoStatusCountDataLabels = ['OpenPO', "HoldPO", 'CancelPO', "PendingPO", 'ApprovedPO', 'ClosedPO'];
-
+        this.DashboardPoStatusCountDataLabels = ["PendingPO", 'PartialPO', "ClosedPO", 'CancelPO'];
       }, error => {
         alert('Something went wrong in Get Seller Sales');
       });
@@ -361,10 +380,10 @@ export class DashboardComponent implements OnInit {
         this.DashboardOrderStatusData = x;
         this.DashboardOrderStatusDataChartData = [
           {
-            data: [x.PendingOrdercount, x.ReadytoDispatchOrdercount, x.IssuedOrdercount, x.ShippedOrdercount, x.DeliveredOrdercount, x.DeliveryRedispatchOrdercount, x.DeliveryCanceledOrdercount]
+            data: [x.PendingOrdercount, x.ReadytoDispatchOrdercount, x.IssuedOrdercount, x.ShippedOrdercount, x.DeliveredOrdercount, x.DeliveryRedispatchOrdercount, x.DeliveryCanceledOrdercount, x.PreCanceledOrdercount]
           }
         ];
-        this.DashboardOrderStatusDataLabels = ['Pending', "RTD", 'Issued', "Shipped", 'Delivered', "DRedispatch", "DCanceled"];
+        this.DashboardOrderStatusDataLabels = ['Pending', "RTD", 'Issued', "Shipped", 'Delivered', "DRedispatch", "DCanceled", "Pre Canceled"];
       }, error => {
         alert('Something went wrong in Get Dashboard Order Status Data');
       });
@@ -373,7 +392,7 @@ export class DashboardComponent implements OnInit {
       this.dashboardservice.GetDashboardOrderFillRate(this.SearchData).subscribe((x: any) => {
         this.isLoading = false;
 
-        this.DashboardOrderFillRate = x
+        this.DashboardOrderFillRate = x;
       }, error => {
         alert('Something went wrong in Get DashboardOrderFillRate');
       });
@@ -384,14 +403,14 @@ export class DashboardComponent implements OnInit {
         this.isLoading = false;
         this.POFillRate = x
       }, error => {
-        alert('Something went wrong in Get DashboardOrderFillRate');
+        alert('Something went wrong in Get POFillRate');
       });
 
       //POAvgTAT
       this.isLoading = true;
       this.dashboardservice.GetPOAvgTAT(this.SearchData).subscribe((x: any) => {
         this.isLoading = false;
-        
+
         this.POAvgTAT = x
       }, error => {
         alert('Something went wrong in Get DashboardOrderAvgTAT');
@@ -401,7 +420,7 @@ export class DashboardComponent implements OnInit {
       this.isLoading = true;
       this.dashboardservice.GetDashboardOrderAvgTAT(this.SearchData).subscribe((x: any) => {
         this.isLoading = false;
-       
+
         this.DashboardOrderAvgTAT = x
       }, error => {
         alert('Something went wrong in Get DashboardOrderAvgTAT');
@@ -428,6 +447,9 @@ export class DashboardComponent implements OnInit {
       this.isLoading = true;
       this.dashboardservice.GetPOGRIRCount(this.SearchData).subscribe((x: any) => {
         this.isLoading = false;
+
+        this.POGRIRData = x;
+
         this.POGRIRCountChartData = [
           {
             data: [x.POCount, x.GRCount, x.IRCount]
@@ -439,12 +461,21 @@ export class DashboardComponent implements OnInit {
         alert('Something went wrong in Get Seller Sales');
       });
 
+      //Pareto
+      // this.isLoading = true;
+      // this.dashboardservice.GetPareto(this.SearchData, this.Paretotype, this.itemnumber).subscribe((x: any) => {
+      //   this.isLoading = false;
+      //   this.SellerSales = x;
+      // }, error => {
+      //  // alert('Something went wrong in Get Seller Sales');
+      // });
+
 
     } else { alert("select city"); }
   }
 
   getCatlogData() {
-    
+
     if (this.Warehouseid) {
       this.CatelogueItemWithCFRChartData = null;
       this.CatelogueItemWithCFRChartData = null;
@@ -470,8 +501,74 @@ export class DashboardComponent implements OnInit {
         alert('Something went wrong in Get Catelogue Item With CFR');
       });
 
-    } else {         alert('Select warehouse ');
+    } else {
+      alert('Select warehouse ');
+    }
   }
+
+  showPOtypeChange(valuetype) {
+
+    this.DashboardPoStatusCountChartData = null;
+    this.DashboardPoStatusCountDataLabels = null;
+    this.DashboardPoStatusAmountChartData = null;
+    this.DashboardPoStatusAmountDataLabels = null;
+    if (valuetype == 'true') {
+      this.showPOCountValue = true;
+    }
+    else {
+      this.showPOCountValue = false;
+    }
+
+    if (this.showPOCountValue == false) {
+
+      this.DashboardPoStatusCountChartData = [
+        {
+          data: [this.DashboardPoStatusCount.PendingPOCount, this.DashboardPoStatusCount.PartialPOCount, this.DashboardPoStatusCount.ClosedPOCount, this.DashboardPoStatusCount.CancelPOCount]
+        }
+      ];
+      this.DashboardPoStatusCountDataLabels = ["PendingPO", 'PartialPO', "ClosedPO", 'CancelPO'];
+    }
+    else {
+      this.DashboardPoStatusAmountChartData = [
+        {
+          data: [this.DashboardPoStatusCount.PendingPOAmount, this.DashboardPoStatusCount.PartialPOAmount, this.DashboardPoStatusCount.ClosedPOAmount, this.DashboardPoStatusCount.CancelPOAmount]
+        }
+      ];
+      this.DashboardPoStatusAmountDataLabels = ["Pending Amount", 'Partial Amount', 'Closed Amount', 'Cancel Amount'];
+    }
+  }
+
+
+
+  showPOGRIRChange(valuetype) {
+    debugger;
+    this.POGRIRCountChartData = null;
+    this.POGRIRCountChartDataLabels = null;
+    this.POGRIRAmountChartData = null;
+    this.POGRIRAmountChartDataLabels = null;
+    if (valuetype == 'true') {
+      this.showPOGRIRAmountValue = true;
+    }
+    else {
+      this.showPOGRIRAmountValue = false;
+    }
+
+    if (this.showPOGRIRAmountValue == false) {
+      this.POGRIRCountChartData = [
+        {
+          data: [this.POGRIRData.POCount, this.POGRIRData.GRCount, this.POGRIRData.IRCount]
+        }
+      ];
+      this.POGRIRCountChartDataLabels = ['PO', 'GR', "IR"];
+    }
+    else {
+      this.POGRIRAmountChartData = [
+        {
+          data: [this.POGRIRData.POAmount, this.POGRIRData.GRAmount, this.POGRIRData.IRAmount]
+        }
+      ];
+      this.POGRIRAmountChartDataLabels = ['PO', 'GR', "IR"];
+    }
   }
 }
 

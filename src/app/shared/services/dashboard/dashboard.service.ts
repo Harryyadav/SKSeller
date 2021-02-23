@@ -11,8 +11,8 @@ export class DashboardService {
     this.apiURL = environment.apiBaseUrl;
 
   }
-  GetCatelogueItemWithCFR(cityid,WarehouseId) {
-    return this.http.get<any>(this.apiURL + '/api/Seller/GetCatelogueItemWithCFR/' + cityid +'/'+WarehouseId);
+  GetCatelogueItemWithCFR(cityid, WarehouseId) {
+    return this.http.get<any>(this.apiURL + '/api/Seller/GetCatelogueItemWithCFR/' + cityid + '/' + WarehouseId);
   }
 
   GetSellerSales(cityid: any) {
@@ -53,7 +53,12 @@ export class DashboardService {
     return this.http.post<any>(this.apiURL + '/api/Seller/POGRIRCount', object);
 
   }
+  GetPareto(object, type, itemnumber) {
   
+    return this.http.post<any>(this.apiURL + '/api/Seller/Pareto/'+type+'/'+itemnumber, object);
+  }
+
+
 }
 
 

@@ -11,11 +11,8 @@
     </div>
     <div class="col-sm-3">
       <label for="FromDate">StartDate</label>
-
       <input type="datetime-local" id="FromDate" name="FromDate" class="form-control"
         [ngModel]="SearchData.FromDate | date:'yyyy-MM-ddTHH:mm'" (ngModelChange)="SearchData.FromDate = $event" />
-
-        
     </div>
     <div class="col-sm-3">
       <label for="FromDate">ToDate</label>
@@ -29,24 +26,6 @@
       </button>
     </div>
   </div>
-  <!-- <div class="row mt6 fontsize-12">
-    <div class="col-sm-6">
-       Admin Dashboard Stastistics, charts, recent events and reports
-      </div>
-    <div class="col-sm-6 text-right">
-      <div ngbDropdown>
-        <button class="btn btn-secondary" type="button" id="dropdownMenuButton2" ngbDropdownToggle>
-          Order Type
-        </button>
-        <div ngbDropdownMenu aria-labelledby="dropdownMenuButton2">
-          <h6 class="dropdown-header">Order Type 1</h6>
-          <a class="dropdown-item">Order Type 2</a>
-          <a class="dropdown-item">Order Type 3</a>
-        </div>
-      </div>
-    </div>
-  </div> -->
-
   <hr />
   <div class="page-header">
     <h3 class="page-title">
@@ -187,7 +166,6 @@
       </div>
     </div>
   </div>
-
   <div class="row">
     <div class="col-lg-6 grid-margin stretch-card">
       <div class="card">
@@ -208,14 +186,11 @@
             </div>
             <div class="col-sm-3 text-right">
               <div ngbDropdown>
-                <!-- <button class="btn btn-secondary" type="button" id="dropdownMenuButton2" ngbDropdownToggle>
-                  Today
-                </button> -->
-                <!-- <div ngbDropdownMenu aria-labelledby="dropdownMenuButton2">
-                  <h6 class="dropdown-header">Monday</h6>
-                  <a class="dropdown-item">Tuesday</a>
-                  <a class="dropdown-item">Wednesday</a>
-                </div> -->
+                <select name="showPOCountValues" id="showPOCountValues" class="form-control"
+                  [(ngModel)]="showPOCountValue" (change)="showPOtypeChange(showPOCountValue)">
+                  <option [value]="false">Count</option>
+                  <option [value]="true">Amount</option>
+                </select>
               </div>
             </div>
           </div>
@@ -227,6 +202,11 @@
             <app-donut-chart [doughnutPieChartDetails]="DashboardPoStatusCountChartData"
               [doughnutPieChartLabelsDetails]="DashboardPoStatusCountDataLabels"></app-donut-chart>
           </div>
+          <div *ngIf="DashboardPoStatusAmountChartData">
+            <app-donut-chart [doughnutPieChartDetails]="DashboardPoStatusAmountChartData"
+              [doughnutPieChartLabelsDetails]="DashboardPoStatusAmountDataLabels"></app-donut-chart>
+          </div>
+
         </div>
       </div>
     </div>
@@ -236,15 +216,14 @@
           <div class="row">
             <div class="col-sm-6">Purchase PO GR IR</div>
             <div class="col-sm-6 text-right">
+
               <div ngbDropdown>
-                <!-- <button class="btn btn-secondary" type="button" id="dropdownMenuButton2" ngbDropdownToggle>
-                  Today
-                </button> -->
-                <!-- <div ngbDropdownMenu aria-labelledby="dropdownMenuButton2">
-                  <h6 class="dropdown-header">Monday</h6>
-                  <a class="dropdown-item">Tuesday</a>
-                  <a class="dropdown-item">Wednesday</a>
-                </div> -->
+                <select name="showPOGRIR" id="showPOGRIRids" class="form-control" [(ngModel)]="showPOGRIRAmountValue"
+                  (change)="showPOGRIRChange(showPOGRIRAmountValue)">
+                  <option [value]="false">Count</option>
+                  <option [value]="true">Amount</option>
+                </select>
+
               </div>
             </div>
           </div>
@@ -253,6 +232,11 @@
             <app-donut-chart [doughnutPieChartDetails]="POGRIRCountChartData"
               [doughnutPieChartLabelsDetails]="POGRIRCountChartDataLabels"></app-donut-chart>
           </div>
+          <div *ngIf="POGRIRAmountChartData">
+            <app-donut-chart [doughnutPieChartDetails]="POGRIRAmountChartData"
+              [doughnutPieChartLabelsDetails]="POGRIRAmountChartDataLabels"></app-donut-chart>
+          </div>
+
           <!-- <canvas baseChart [chartType]="'doughnut'" [datasets]="doughnutPieChartData" [labels]="doughnutPieChartLabels"
             [options]="doughnutPieChartOptions" [colors]="doughnutPieChartColors"></canvas> -->
         </div>
@@ -266,9 +250,16 @@
           <div class="row">
             <div class="col-sm-2 pt2"><img src="assets/images/money_1.svg" /></div>
             <div class="col-sm-6">
-              <h3 *ngIf="POFillRate">{{POFillRate.fillrate}}</h3><small>Fill Rate</small>
+              <h3>{{POFillRate.fillrate}} % </h3><small>Fill Rate</small>
             </div>
-            <div class="col-sm-3 text-right pt4"><i class="fa fa-long-arrow-up text-success"></i> 2.3%</div>
+            <div class="col-sm-3 text-right pt4" *ngIf="POFillRate">
+              <span *ngIf="POFillRate.Signfillrate > 0">
+                <i class="fa fa-long-arrow-up text-success"></i>{{POFillRate.Signfillrate}} %
+              </span>
+              <span *ngIf="POFillRate.Signfillrate < 0">
+                <i class="fa fa-long-arrow-down text-danger"></i>{{POFillRate.Signfillrate}} %
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -301,10 +292,11 @@
           <div class="row">
             <div class="col-sm-6">
               <div *ngIf="DashboardOrderStatusDataChartData">
-              <app-donut-chart [doughnutPieChartDetails]="DashboardOrderStatusDataChartData"
-                [doughnutPieChartLabelsDetails]="DashboardOrderStatusDataLabels"></app-donut-chart>
-            </div> </div>
-            <div class="col-sm-6 text-right">
+                <app-donut-chart [doughnutPieChartDetails]="DashboardOrderStatusDataChartData"
+                  [doughnutPieChartLabelsDetails]="DashboardOrderStatusDataLabels"></app-donut-chart>
+              </div>
+            </div>
+            <div class="col-sm-6 text-right" *ngIf="DashboardOrderStatusData">
               <div ngbDropdown>
                 <table class="no-border custom-table">
                   <tr>
@@ -315,50 +307,58 @@
                   <tr>
                     <td><button class="btn btn-warning btn-xs"><i class="fa fa-share-square-o"></i> Export</button></td>
                     <td class="text-left">Pending</td>
-                    <td>500</td>
-                    <td>500</td>
+                    <td>{{DashboardOrderStatusData.PendingOrdercount}}</td>
+                    <td>{{DashboardOrderStatusData.PendingOrderAmount}}</td>
                   </tr>
                   <tr>
                     <td><button class="btn btn-primary btn-xs"><i class="fa fa-share-square-o"></i> Export</button></td>
                     <td class="text-left">Ready to dispatched</td>
-                    <td>301</td>
-                    <td>300</td>
+                    <td>{{DashboardOrderStatusData.ReadytoDispatchOrdercount}}</td>
+                    <td>{{DashboardOrderStatusData.ReadytoDispatchOrderAmount}}</td>
                   </tr>
                   <tr>
                     <td><button class="btn btn-info btn-xs"><i class="fa fa-share-square-o"></i> Export</button></td>
                     <td class="text-left">Issued</td>
-                    <td>152</td>
-                    <td>152</td>
+                    <td>{{DashboardOrderStatusData.IssuedOrdercount}}</td>
+                    <td>{{DashboardOrderStatusData.IssuedOrderAmount}}</td>
                   </tr>
                   <tr>
                     <td><button class="btn btn-danger btn-xs"><i class="fa fa-share-square-o"></i> Export</button></td>
                     <td class="text-left">Shipped</td>
-                    <td>124</td>
-                    <td>124</td>
+                    <td>{{DashboardOrderStatusData.ShippedOrdercount}}</td>
+                    <td>{{DashboardOrderStatusData.ShippedOrderAmount}}</td>
                   </tr>
+
+
                   <tr>
-                    <td><button class="btn btn-success btn-xs"><i class="fa fa-share-square-o"></i> Export</button></td>
-                    <td class="text-left">Delivery Canceled</td>
-                    <td>1254</td>
-                    <td>1254</td>
+                    <td><button class="btn btn-primary btn-xs"><i class="fa fa-share-square-o"></i> Export</button></td>
+                    <td class="text-left">Delivered</td>
+                    <td>{{DashboardOrderStatusData.DeliveredOrdercount}}</td>
+                    <td>{{DashboardOrderStatusData.DeliveredOrderAmount}}</td>
                   </tr>
                   <tr>
                     <td><button class="btn btn-gray btn-xs"><i class="fa fa-share-square-o"></i> Export</button></td>
                     <td class="text-left">Delivered Re-Dispatched</td>
-                    <td>125</td>
-                    <td>125</td>
+                    <td>{{DashboardOrderStatusData.DeliveryRedispatchOrdercount}}</td>
+                    <td>{{DashboardOrderStatusData.DeliveryRedispatchOrderAmount}}</td>
                   </tr>
                   <tr>
-                    <td><button class="btn btn-primary btn-xs"><i class="fa fa-share-square-o"></i> Export</button></td>
-                    <td class="text-left">Delivered</td>
-                    <td>12450</td>
-                    <td>12450</td>
+                    <td><button class="btn btn-success btn-xs"><i class="fa fa-share-square-o"></i> Export</button></td>
+                    <td class="text-left">Delivery Canceled/Poc</td>
+                    <td>{{DashboardOrderStatusData.DeliveryCanceledOrdercount}}</td>
+                    <td>{{DashboardOrderStatusData.DeliveryCanceledOrderAmount}}</td>
+                  </tr>
+                  <tr>
+                    <td><button class="btn btn-danger btn-xs"><i class="fa fa-share-square-o"></i> Export</button></td>
+                    <td class="text-left">Pre Canceled</td>
+                    <td>{{DashboardOrderStatusData.PreCanceledOrdercount}}</td>
+                    <td>{{DashboardOrderStatusData.PreCanceledOrderAmount}}</td>
                   </tr>
                 </table>
               </div>
             </div>
           </div>
-          
+
           <!-- <canvas baseChart [chartType]="'doughnut'" [datasets]="doughnutPieChartData" [labels]="doughnutPieChartLabels"
             [options]="doughnutPieChartOptions" [colors]="doughnutPieChartColors"></canvas> -->
         </div>
@@ -369,16 +369,25 @@
     <div class="col-lg-6 grid-margin stretch-card">
       <div class="card">
         <div class="card-body pt2 pb2">
-          <div class="row">
+          <div class="row" *ngIf="DashboardOrderFillRate">
             <div class="col-sm-2 pt2"><img src="assets/images/money_1.svg" /></div>
+
             <div class="col-sm-6">
-              <h3 *ngIf="DashboardOrderFillRate">{{DashboardOrderFillRate.fillrate}}</h3><small>Fill Rate</small>
+              <h3>{{DashboardOrderFillRate.fillrate}} % </h3><small>Fill Rate</small>
             </div>
-            <div class="col-sm-3 text-right pt2"><i class="fa fa-long-arrow-up text-success"></i> 2.3%</div>
+            <div class="col-sm-3 text-right pt4">
+              <span *ngIf="DashboardOrderFillRate.Signfillrate > 0">
+                <i class="fa fa-long-arrow-up text-success"></i>{{DashboardOrderFillRate.Signfillrate}} %
+              </span>
+              <span *ngIf="DashboardOrderFillRate.Signfillrate < 0">
+                <i class="fa fa-long-arrow-down text-danger"></i>{{DashboardOrderFillRate.Signfillrate}} %
+              </span>
+            </div>
           </div>
         </div>
       </div>
     </div>
+
     <div class="col-lg-6 grid-margin stretch-card">
       <div class="card">
         <div class="card-body pt2 pb2">
@@ -398,8 +407,8 @@
     <div class="col-lg-12 grid-margin stretch-card">
       <div class="card">
         <div class="card-body">
-          <div class="row">
-            <div class="col-sm-6">Stock Details</div>
+          <div class="row">Stock Details
+            <!-- <div class="col-sm-6"></div> -->
             <div class="col-sm-6 text-right">
               <div ngbDropdown>
                 <!-- <button class="btn btn-secondary" type="button" id="dropdownMenuButton2" ngbDropdownToggle>
@@ -457,7 +466,7 @@
             <div class="col-sm-3 pt2"><img src="assets/images/page_1.svg" /> </div>
             <div class="col-sm-9">
               <h3 *ngIf="DashboardCurrentVsNetCurrent"><i class="fa fa-inr"></i>
-                {{DashboardCurrentVsNetCurrent.ExpireStockAmount | number : '1.2-2'}}</h3><small>Not Saleable</small>
+                {{DashboardCurrentVsNetCurrent.ExpireStockAmount | number : '1.2-2'}}</h3><small>Non Saleable</small>
             </div>
           </div>
         </div>
@@ -474,16 +483,14 @@
       <div class="card">
         <div class="card-body">
           <div class="row">
-            <div class="col-sm-12 text-right">
+            <div class="col-sm-6 text-right">
               <div ngbDropdown>
-                <!-- <button class="btn btn-secondary" type="button" id="dropdownMenuButton2" ngbDropdownToggle>
-                  Today
-                </button> -->
-                <!-- <div ngbDropdownMenu aria-labelledby="dropdownMenuButton2">
-                  <h6 class="dropdown-header">Monday</h6>
-                  <a class="dropdown-item">Tuesday</a>
-                  <a class="dropdown-item">Wednesday</a>
-                </div> -->
+
+                <select name="showPOCountValues" id="showPOCountValues" class="form-control"
+                [(ngModel)]="showPOCountValue" (change)="showPOtypeChange(showPOCountValue)">
+                <option [value]="false">Count</option>
+                <option [value]="true">Amount</option>
+              </select>
               </div>
             </div>
           </div>
